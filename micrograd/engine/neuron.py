@@ -1,6 +1,6 @@
-from .value import Value
-
 import random
+from .value import Value
+from micrograd.schemas.schemas import NeuronSchema
 
 class Neuron:
 
@@ -25,3 +25,18 @@ class Neuron:
 
     def parameters(self):
         return self.w + [self.b]
+
+    def export(self):
+        return NeuronSchema(values=([w.value for w in self.w] + [self.b.value]))
+
+    @classmethod
+    def from_json(cls, neuron: NeuronSchema):
+        w = [Value(v) for v in neuron.values[:-1]]
+        b = Value(neuron.values[-1])
+        
+        #TODO Not great, but allows to keep simple Neuron constructor
+        neuron = cls(len(neuron.values)-1)
+        neuron.w = w
+        neuron.b = b
+
+        return neuron
