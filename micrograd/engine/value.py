@@ -90,6 +90,16 @@ class Value:
 
         return child
 
+    def relu(self):
+        child = Value(max(0, self.value), parents=(self,))
+
+        def _backward():
+            self.grad += (1.0 if self.value > 0 else 0.0) * child.grad
+            self._backward()
+
+        child._backward = _backward
+
+        return child
 
     def _backward(self):
         pass

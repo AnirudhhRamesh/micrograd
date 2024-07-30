@@ -12,7 +12,8 @@ class ComplexLogisticRegression(NeuralNet):
         super().__init__()
         # Set-up a fully-connected neural net for training
         layers = [
-            Layer(image_size, 3),
+            Layer(image_size, 5, activation="relu_activation"),
+            Layer(5, 3, activation="relu_activation"),
             Layer(3, 1, activation="sigmoid_activation")
         ]
 
