@@ -152,8 +152,9 @@ def main():
     This basically describes the loss, in this case using the Mean Squared Error (MSE) function and my understanding of it. And this will be our measure of 'how far apart are my points'.
 
     Here is the MSE loss function:
-    MSE = \\frac{1}{n} \\sum_{i=1}^{n} (y_i - \\hat{y}_i)^2
     """)
+    st.latex(r"MSE = \frac{1}{n} \sum_{i=1}^{n} (y_i - \hat{y}_i)^2")
+
 
     st.subheader("Fitting our line to our data points")
 
@@ -186,8 +187,11 @@ def main():
     Let's say currently we are at m=2, the loss is approximately 10.
     By taking the partial derivative of the loss with respect to m, we are basically asking 'how does the loss change when m changes.
     For a given point, we can use the formula for the limit/derivative:
-    f'(x) = \\lim_{h \\to 0} \\frac{f(x+h) - f(x)}{h}
+    """)
 
+    st.latex(r"f'(x) = \lim_{h \to 0} \frac{f(x+h) - f(x)}{h}")
+
+    st.write("""
     This tells us that if we take a very small h e.g. 0.001, and we compute the loss w.r.t to m=2, we get that the (f(2.001) - f(2)) / 0.001 = (9.999 - 10) / 0.001 = (-0.001) / 0.001 = -1 (very rough calc)
 
     What does this -1 means? It means that if we increase m by 1, then the loss will increase by -1.
@@ -201,8 +205,11 @@ def main():
     So m = m - dL/dm (subtract by a positive value, thus m decreases thus loss decreases)
 
     This formula is our 'optimization step'. We can improve it further by adding a hyperparameter epsilon which tells us how big optimization steps to make (if we take too big steps, we could jump across the minima. If we take too small steps, we could converge at a local minima or take too long to train):
-    m := m - \\epsilon \\frac{\\partial L}{\\partial m}
+    """)
 
+    st.latex(r"m := m - \epsilon \frac{\partial L}{\partial m}")
+
+    st.write("""
     Eventually, we'll get to a point where the loss barely changes when we change m, which is the minimum of the loss (it is where the loss is changing from positive to negative, and thus the change in the loss in the lowest (and equal to 0)). This would be where our loss is at its lowest.
     """)
 
@@ -226,8 +233,10 @@ def main():
     We construct this in a way that our loss increases when our prediction is incorrect, and our loss does not change when our prediction is indeed correct. Eventually, if all our predictions are correct, then our loss would not change thus it will be zero.
 
     The binary cross entropy loss is basically the following:
-    binary cross entropy cost = -y * log (y^) -(1-y) * log ( 1-y^)
+    """)
+    st.latex(r"BCE = -y \log(\hat{y}) - (1-y) \log(1-\hat{y})")
 
+    st.write("""
     Just like the MSE, I love this function because it's actually very intuitive: 
     - The log function tells us what exponent we need to raise our base to get the value. So e.g. log2(8) = 3, because we need to raise 2 (base) to 3 (exponent) to get 8 (value). 2^3 = 8.
     - The log of 1 is equal to zero (e.g. log2(1) = 0). So for correct predictions, we want the value inside the log to be as close as possible to 1.
@@ -239,9 +248,11 @@ def main():
     Note: As you might have noticed, since we're using logs, we need to ensure that our predictions are capped between 0 and 1. log(0) or negative does not exist. In order to do this (and also to better fit our data points), we'll have to use a sigmoid cost function (instead of the simple linear cost function of y= m*x + c).
 
     The sigmoid function as as follows:
+    """)
 
-    y^ = 1 / 1 + (e^-(mx + b))
+    st.latex(r'\hat{y} = \frac{1}{1 + e^{-(mx + b)}}')
 
+    st.write("""
     This is also intuitive:
     - When the exponent component is negative, then our prediction is 1/(1 + huge) = 0
     - When the exponent component is 0, then our prediction is 1/(1+1) = 0.5
@@ -249,8 +260,6 @@ def main():
     """)
 
     st.image("sigmoid.png", caption="Sigmoid")
-
-    st.markdown("===")
 
     st.header("Neural nets")
 
@@ -289,8 +298,11 @@ def main():
     In the backward pass, we recursively applying the chain rule from differentiation.
 
     Refresh on the chain rule:
-    dy/dx = du/dx * dy/u
+    """)
+    
+    st.latex(r'\frac{dy}{dx} = \frac{du}{dx} \cdot \frac{dy}{du}')
 
+    st.write("""
     What the chain rule states is that the change in loss with respect to x is equal to the change in loss with respect to an intermediate variable u * the change in u with respect to x.
 
     This means we can go back from the loss, and at each previous node we can apply the chain rule to get the partial derivative of that node with respect to the loss. As a result, computing the partial derivatives now only takes O(n)!
