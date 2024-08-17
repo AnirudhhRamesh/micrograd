@@ -21,6 +21,7 @@ def main():
     st.subheader("What is this?")
     st.write("Inspired by Jian-Yang from the show 'Silicon Valley', I decided to build a hotdog classifier.")
     st.write("My classifier has a training loss of 0.8 and a training accuracy of 52%. Making it quite possibly the world's worst hotdog classifier :)")
+    st.info("Here is the code: http://github.com/anirudhhramesh/micrograd")
 
     st.image("jian_yang_hotdog.png", caption="Jian-Yang's hotdog classifier, from the show Silicon Valley", width=600)
     
